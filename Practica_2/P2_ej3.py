@@ -156,7 +156,7 @@ if __name__=="__main__":
 
     ### Entrenameinto Red
     params, history = train(x_train,y_train,x_val,y_val,
-                            epochs=200,batch_size=500,lr=5e-2,lreg=1e-3,print_cada=5)
+                            epochs=500,batch_size=500,lr=5e-2,lreg=1e-3,print_cada=5)
     
     ### Graficos
     epochs = np.arange(1, len(history['loss'])+1)

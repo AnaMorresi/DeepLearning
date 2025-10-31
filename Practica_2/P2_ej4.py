@@ -89,7 +89,7 @@ def backward(y_pred, y_true, val_med, W1, W2, reg_lambda, MSE, CCE):
 
 ### Entrenamiento 
 def train(x_train,y_train,x_val,y_val,
-            epochs=25,batch_size=200,lr=0.01,lreg=1e-4,print_cada=1, MSE=False, CCE=False):
+            epochs=25,batch_size=300,lr=0.01,lreg=1e-4,print_cada=1, MSE=False, CCE=False):
     if not MSE and not CCE:
         MSE=True
 
@@ -126,11 +126,11 @@ def train(x_train,y_train,x_val,y_val,
 
         # Evaluacion en train completo
         y_train_pred, _ = forward(x_train, W1, b1, W2, b2)
-        train_loss = loss(y_train_pred, y_train, W1, W2, lreg)
+        train_loss = loss(y_train_pred, y_train, W1, W2, lreg, MSE, CCE)
         train_acc = accuracy(y_train_pred, y_train)
 
         y_val_pred, _ = forward(x_val, W1, b1, W2, b2)
-        val_loss = loss(y_val_pred, y_val, W1, W2, lreg)
+        val_loss = loss(y_val_pred, y_val, W1, W2, lreg, MSE, CCE)
         val_acc = accuracy(y_val_pred, y_val)
 
         history['loss'].append(train_loss)
@@ -168,7 +168,7 @@ if __name__=="__main__":
 
     ### Entrenameinto Red
     params, history = train(x_train,y_train,x_val,y_val,
-                            epochs=200,batch_size=500,lr=5e-2,lreg=1e-3,print_cada=5, CCE=True)
+                            epochs=600,batch_size=500,lr=5e-2,lreg=1e-3,print_cada=5, CCE=True, MSE=False)
     
     ### Graficos
     epochs = np.arange(1, len(history['loss'])+1)

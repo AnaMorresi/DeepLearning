@@ -40,8 +40,6 @@ def params_init(input_dim, hidden_dim, output_dim, seed):
     limit2 = np.sqrt(6 / (hidden_dim + output_dim))
     W2 = np.random.uniform(-limit2,limit2,(hidden_dim,output_dim)).astype(np.float32)
     b2 = np.zeros((1, output_dim))
-    #W1 = np.random.uniform(-0.01, 0.01, size=(input_dim, hidden_dim))
-    #W2 = np.random.uniform(-0.01, 0.01, size=(hidden_dim, output_dim))
 
     return W1, b1, W2, b2
 
@@ -74,7 +72,7 @@ def loss_binary_cross_entropy(y_pred, y_true):
     eps = 1e-10
     return -np.mean(np.sum(y_true*np.log(y_pred+eps) + (1-y_true)*np.log(1-y_pred+eps), axis=1))
 
-def loss(y_pred, y_true, W1, W2, lreg, MSE=True, CCE=False, BCE=False):
+def loss(y_pred, y_true, W1, W2, lreg, MSE=True, CCE=False):
     # L = (1/(2N)) sum ||y_pred - y||^2 + (lambda/2)*(||W1||^2 + ||W2||^2)
     if MSE:
         data_loss = loss_MSE(y_pred, y_true)
@@ -152,11 +150,11 @@ def train(x_train,y_train,x_test,y_test,
 
         # Evaluacion en train completo
         y_train_pred, _ = forward(x_train, W1, b1, W2, b2)
-        train_loss = loss(y_train_pred, y_train, W1, W2, lreg)
+        train_loss = loss(y_train_pred, y_train, W1, W2, lreg, MSE, CCE)
         train_acc = accuracy(y_train_pred, y_train)
 
         y_test_pred, _ = forward(x_test, W1, b1, W2, b2)
-        test_loss = loss(y_test_pred, y_test, W1, W2, lreg)
+        test_loss = loss(y_test_pred, y_test, W1, W2, lreg, MSE, CCE)
         test_acc = accuracy(y_test_pred, y_test)
 
         history['loss'].append(train_loss)
@@ -193,8 +191,8 @@ if __name__=="__main__":
 
     ### Entrenameinto Red
     params, history = train(x_train,y_train,x_val,y_val,
-                            epochs=70,batch_size=200,lr=1e-3,lreg=1e-1,print_cada=5,
-                            MSE=False, CCE=True, sigm=True, RELU=False)
+                            epochs=200,batch_size=200,lr=1e-2,lreg=1e-3,print_cada=5,
+                            MSE=True, CCE=False, sigm=False, RELU=False)
     
     ### Graficos
     epochs = np.arange(1, len(history['loss'])+1)
