@@ -8,6 +8,6 @@ La organización del repositorio es la siguiente:
 
 - **`Practica_n/`**: Contiene los archivos correspondientes a la práctica numero *n* de la materia. 
   - Dentro de cada carpeta de práctica encontrarás:
-    - **PDF** con la descripción de la práctica.
+    - **PDFs** con la descripción de la práctica y con la resolución de la práctica.
     - **Figuras** utilizadas en los ejercicios.
     - **Scripts** en Python con la resolución de los ejercicios.
